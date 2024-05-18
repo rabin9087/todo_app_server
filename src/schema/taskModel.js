@@ -4,8 +4,8 @@ export const addTask = (tasks) => {
     return TaskSchema(tasks).save()
 }
 
-export const getAllTasks = () => {
-    return TaskSchema.find()
+export const getAllTasks = (filter) => {
+    return TaskSchema.find(filter)
 }
 
 export const getATask = (filter) => {
@@ -13,7 +13,7 @@ export const getATask = (filter) => {
 }
 
 export const updateTask = (id, filter) => {
-    return TaskSchema.findByIdAndUpdate({ id }, { filter }, { new: true })
+    return TaskSchema.findByIdAndUpdate(id, filter, { new: true })
 }
 
 export const deleteTask = (id) => {

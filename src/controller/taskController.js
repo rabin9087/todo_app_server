@@ -1,4 +1,4 @@
-import { addTask, getATask, getAllTasks } from "../schema/taskModel.js";
+import { addTask, getATask, getAllTasks, updateTask } from "../schema/taskModel.js";
 
 export const postTask = async (req, res, next) => {
     try {
@@ -23,7 +23,7 @@ export const postTask = async (req, res, next) => {
                     status: 'Failed',
                     message: 'Unable to add the task'
                 })
-        }
+        } 0
 
     } catch (error) {
         next(error)
@@ -33,12 +33,14 @@ export const postTask = async (req, res, next) => {
 
 export const fetchAllTasks = async (req, res, next) => {
     try {
-        const result = await getAllTasks();
+        const { email } = req.params
+        const result = await getAllTasks({ email });
 
         result?.length ?
             res.json({
                 status: 'success',
-                message: 'All available tasks'
+                message: 'All available tasks',
+                tasks: result
             }) :
             res.json({
                 status: 'error',
@@ -47,5 +49,44 @@ export const fetchAllTasks = async (req, res, next) => {
     } catch (error) {
         error(next)
     }
+}
 
+export const fetchATask = async (req, res, next) => {
+    try {
+        const { _id } = req.params
+        const result = await getATask({ _id });
+
+        result?._id ?
+            res.json({
+                status: 'success',
+                message: 'All available tasks',
+                tasks: result
+            }) :
+            res.json({
+                status: 'error',
+                message: 'Unable to get all the tasks'
+            })
+    } catch (error) {
+        error(next)
+    }
+}
+
+export const updateATasks = async (req, res, next) => {
+    try {
+        const { _id } = req.params
+        const result = await updateTask(_id, req.body);
+
+        result?.length ?
+            res.json({
+                status: 'success',
+                message: 'All available tasks',
+                tasks: result
+            }) :
+            res.json({
+                status: 'error',
+                message: 'Unable to get all the tasks'
+            })
+    } catch (error) {
+        error(next)
+    }
 }

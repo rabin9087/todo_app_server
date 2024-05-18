@@ -15,8 +15,12 @@ const taskSchema = mongoose.Schema({
         required: true,
         default: 'not yet completed'
     },
+    email: {
+        type: String,
+        reduired: true
+    }
 }, {
     timestamps: true,
 })
 
-export default mongoose.model("tasksList", taskSchema)
+export default mongoose.model("taskList", taskSchema)
