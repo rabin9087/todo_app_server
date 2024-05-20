@@ -73,9 +73,9 @@ export const fetchATask = async (req, res, next) => {
 export const updateATasks = async (req, res, next) => {
     try {
         const { _id } = req.params
-        console.log(_id, req.body)
+
         const result = await updateTask({ _id }, req.body);
-        console.log(result)
+
         result ?
             res.json({
                 status: 'success',
@@ -94,9 +94,7 @@ export const updateATasks = async (req, res, next) => {
 export const deleteATask = async (req, res, next) => {
     try {
         const { _id } = req.params
-        console.log(_id)
         const result = await deleteTask(_id);
-        console.log(result)
         result ?
             res.json({
                 status: 'success',
