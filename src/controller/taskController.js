@@ -1,8 +1,7 @@
-import { addTask, getATask, getAllTasks, updateTask } from "../schema/taskModel.js";
+import { addTask, deleteTask, getATask, getAllTasks, updateTask } from "../schema/taskModel.js";
 
 export const postTask = async (req, res, next) => {
     try {
-        console.log(req.body)
         const { task } = req.body
         const resp = await getATask({ task })
         if (resp?._id) {
@@ -47,7 +46,7 @@ export const fetchAllTasks = async (req, res, next) => {
                 message: 'Unable to get all the tasks'
             })
     } catch (error) {
-        error(next)
+        next(error)
     }
 }
 
@@ -67,26 +66,48 @@ export const fetchATask = async (req, res, next) => {
                 message: 'Unable to get all the tasks'
             })
     } catch (error) {
-        error(next)
+        next(error)
     }
 }
 
 export const updateATasks = async (req, res, next) => {
     try {
         const { _id } = req.params
-        const result = await updateTask(_id, req.body);
-
-        result?.length ?
+        console.log(_id, req.body)
+        const result = await updateTask({ _id }, req.body);
+        console.log(result)
+        result ?
             res.json({
                 status: 'success',
-                message: 'All available tasks',
+                message: 'Task has been Updated',
                 tasks: result
             }) :
             res.json({
                 status: 'error',
-                message: 'Unable to get all the tasks'
+                message: 'Unable to update the task, Please try again later'
             })
     } catch (error) {
-        error(next)
+        next(error)
+    }
+}
+
+export const deleteATask = async (req, res, next) => {
+    try {
+        const { _id } = req.params
+        console.log(_id)
+        const result = await deleteTask(_id);
+        console.log(result)
+        result ?
+            res.json({
+                status: 'success',
+                message: 'Task has been deleted successfully',
+                tasks: result
+            }) :
+            res.json({
+                status: 'error',
+                message: 'Unable to delete the task, Please try again later'
+            })
+    } catch (error) {
+        next(error)
     }
 }

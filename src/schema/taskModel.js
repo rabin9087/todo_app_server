@@ -17,5 +17,5 @@ export const updateTask = (id, filter) => {
 }
 
 export const deleteTask = (id) => {
-    return TaskSchema.findByIdAndDelete({ id })
+    return TaskSchema.findByIdAndDelete(id)
 }
