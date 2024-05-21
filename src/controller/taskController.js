@@ -2,8 +2,8 @@ import { addTask, deleteTask, getATask, getAllTasks, updateTask } from "../schem
 
 export const postTask = async (req, res, next) => {
     try {
-        const { task } = req.body
-        const resp = await getATask({ task })
+        const { task, email } = req.body
+        const resp = await getATask({ task, email })
         if (resp?._id) {
             res.json({
                 status: 'Failed',
@@ -34,7 +34,6 @@ export const fetchAllTasks = async (req, res, next) => {
     try {
         const { email } = req.params
         const result = await getAllTasks({ email });
-
         result?.length ?
             res.json({
                 status: 'success',
